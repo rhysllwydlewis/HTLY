@@ -3,10 +3,12 @@ import Link from 'next/link';
 import { FloatingTravelWidget } from '@/components/FloatingTravelWidget';
 import { HolidayDealCard } from '@/components/HolidayDealCard';
 import { Icon } from '@/components/Icon';
+import { HolidaySearchForm } from '@/components/search/HolidaySearchForm';
 import { SiteFooter } from '@/components/SiteFooter';
 import { SiteHeader } from '@/components/SiteHeader';
 import { brandUrl, brandDisplay } from '@/lib/brand';
 import { deals, destinations } from '@/lib/holiday-data';
+import { formatGuestRoomLabel, parseHolidaySearchParams } from '@/lib/search-state';
 
 export const metadata: Metadata = {
   title: `Search holidays | ${brandDisplay}`,
@@ -26,24 +28,8 @@ type SearchPageProps = {
 
 type SearchSummary = ReturnType<typeof buildSummary>;
 
-function readParam(params: SearchPageProps['searchParams'], key: string) {
-  const value = params?.[key];
-  return Array.isArray(value) ? value[0] ?? '' : value ?? '';
-}
-
 function buildSummary(params: SearchPageProps['searchParams']) {
-  const destination = readParam(params, 'destination').trim();
-  const checkIn = readParam(params, 'check-in').trim();
-  const checkOut = readParam(params, 'check-out').trim();
-  const guests = readParam(params, 'guests').trim();
-  const month = readParam(params, 'month').trim();
-  const budget = readParam(params, 'budget').trim();
-  const style = readParam(params, 'style').trim();
-  const board = readParam(params, 'board').trim();
-  const maxBudget = readParam(params, 'maxBudget').trim() || budget;
-  const sort = readParam(params, 'sort').trim() || 'recommended';
-
-  return { destination, checkIn, checkOut, guests, month, budget, style, board, maxBudget, sort };
+  return parseHolidaySearchParams(params);
 }
 
 function normalise(value: string) {
@@ -109,7 +95,11 @@ function getResults(summary: SearchSummary) {
 
 export default function SearchPage({ searchParams }: SearchPageProps) {
   const summary = buildSummary(searchParams);
-  const hasQuery = Boolean(summary.destination || summary.month || summary.budget || summary.style || summary.board || summary.maxBudget);
+  const destinationOptions = Array.from(new Set([
+    ...destinations.map((destination) => destination.name),
+    ...deals.flatMap((deal) => [deal.destination, deal.resort, deal.badge, ...deal.tags])
+  ]));
+  const hasQuery = Boolean(summary.destination || summary.checkIn || summary.checkOut || summary.month || summary.budget || summary.style || (summary.board && summary.board !== 'Any') || summary.maxBudget);
   const filteredMatches = deals.filter((deal) => (
     matchesDestination(deal, summary.destination)
     && matchesStyle(deal, summary.style)
@@ -124,7 +114,7 @@ export default function SearchPage({ searchParams }: SearchPageProps) {
   const resultHelp = hasQuery
     ? hasExactMatches ? 'Sorted and filtered from HTLY sample deals while live inventory is pending.' : 'No exact preview match yet, so we are showing close-fit HTLY favourites within your broad criteria.'
     : 'Add a destination or use a shortcut to unlock tailored result previews.';
-  const chips = [summary.destination, summary.checkIn ? `${summary.checkIn}${summary.checkOut ? ` – ${summary.checkOut}` : ''}` : '', summary.guests, summary.month, summary.maxBudget ? `Budget ${summary.maxBudget}` : '', summary.style, summary.board && summary.board !== 'Any' ? summary.board : ''].filter((chip): chip is string => Boolean(chip));
+  const chips = [summary.destination, summary.checkIn ? `${summary.checkIn}${summary.checkOut ? ` – ${summary.checkOut}` : ''}` : '', hasQuery ? formatGuestRoomLabel(summary) : '', summary.month, summary.maxBudget ? `Budget ${summary.maxBudget}` : '', summary.style, summary.board && summary.board !== 'Any' ? summary.board : ''].filter((chip): chip is string => Boolean(chip));
 
   return (
     <>
@@ -149,21 +139,12 @@ export default function SearchPage({ searchParams }: SearchPageProps) {
 
         <section className="container search-results-layout" aria-label="Holiday search results preview">
           <aside className="filter-rail glass-card" aria-label="Filter results" id="filters">
-            <form action="/search" className="filter-form">
+            <div className="filter-form">
               <div className="filter-title"><Icon name="sliders" /><strong>Refine results</strong></div>
-              <label><span>Destination or resort</span><input name="destination" defaultValue={summary.destination} placeholder="e.g. Greece" /></label>
-              <label><span>Holiday type</span><select name="style" defaultValue={summary.style || 'Any'}><option>Any</option><option>Beach</option><option>Family</option><option>Luxury</option><option>All-inclusive</option><option>Budget</option><option>City break</option></select></label>
-              <label><span>Board basis</span><select name="board" defaultValue={summary.board || 'Any'}><option>Any</option><option>All inclusive</option><option>Breakfast</option><option>Half board</option><option>Self catering</option></select></label>
-              <label><span>Max budget</span><input name="maxBudget" defaultValue={summary.maxBudget} placeholder="£1,000 pp" /></label>
-              <label><span>Sort by</span><select name="sort" defaultValue={summary.sort}><option value="recommended">Recommended</option><option value="price-low">Price: low to high</option><option value="saving">Biggest saving</option><option value="family">Family favourites</option></select></label>
-              {summary.month ? <input type="hidden" name="month" value={summary.month} /> : null}
-              {summary.checkIn ? <input type="hidden" name="check-in" value={summary.checkIn} /> : null}
-              {summary.checkOut ? <input type="hidden" name="check-out" value={summary.checkOut} /> : null}
-              {summary.guests ? <input type="hidden" name="guests" value={summary.guests} /> : null}
-              <button type="submit" className="filter-submit"><Icon name="search" />Update results</button>
+              <HolidaySearchForm initialState={summary} destinationOptions={destinationOptions} variant="filters" showFilters />
               <Link href="/search" className="filter-reset">Clear search</Link>
               <div className="filter-note">These filters are functional against HTLY sample deals. Live availability, real rooms and booking rules will connect later.</div>
-            </form>
+            </div>
           </aside>
 
           <div className="results-column">
