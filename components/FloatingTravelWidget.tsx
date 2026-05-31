@@ -1,9 +1,12 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { Icon } from '@/components/Icon';
+import { getSavedDealSlugs, savedDealsChangedEvent } from '@/components/SaveDealButton';
 
 const intents = ['Beach', 'Family', 'Luxury', 'All-inclusive', 'Budget', 'City break'];
+const defaultStyle = 'Beach';
 const plannerStorageKey = 'htly-travel-widget-plan';
 
 type PlannerState = {
@@ -14,15 +17,26 @@ type PlannerState = {
 };
 
 export function FloatingTravelWidget() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const [style, setStyle] = useState('Beach');
+  const [style, setStyle] = useState(defaultStyle);
   const [destination, setDestination] = useState('');
   const [budget, setBudget] = useState('');
   const [month, setMonth] = useState('');
+  const [savedCount, setSavedCount] = useState(0);
+  const hasDestination = destination.trim().length > 0;
+  const isProductFlow = pathname?.startsWith('/search') || pathname?.startsWith('/deals');
 
   useEffect(() => {
+    function syncSavedCount() {
+      setSavedCount(getSavedDealSlugs().length);
+    }
+
     setIsMounted(true);
+    syncSavedCount();
+    window.addEventListener('storage', syncSavedCount);
+    window.addEventListener(savedDealsChangedEvent, syncSavedCount);
 
     try {
       setIsOpen(window.localStorage.getItem('htly-travel-widget') !== 'closed');
@@ -38,6 +52,11 @@ export function FloatingTravelWidget() {
     } catch {
       setIsOpen(true);
     }
+
+    return () => {
+      window.removeEventListener('storage', syncSavedCount);
+      window.removeEventListener(savedDealsChangedEvent, syncSavedCount);
+    };
   }, []);
 
   useEffect(() => {
@@ -79,12 +98,25 @@ export function FloatingTravelWidget() {
     rememberWidgetState('open');
   }
 
+  function resetPlanner() {
+    setStyle(defaultStyle);
+    setDestination('');
+    setBudget('');
+    setMonth('');
+
+    try {
+      window.localStorage.removeItem(plannerStorageKey);
+    } catch {
+      // Storage can be unavailable in private or restricted browsing modes.
+    }
+  }
+
   if (!isMounted) {
     return null;
   }
 
   return (
-    <aside className={`travel-widget ${isOpen ? 'is-open' : 'is-closed'}`} aria-label="Holiday assistant widget">
+    <aside className={`travel-widget ${isOpen ? 'is-open' : 'is-closed'} ${isProductFlow ? 'is-product-flow' : ''}`} aria-label="Holiday assistant widget">
       {isOpen ? (
         <div className="travel-widget-panel glass-card" role="dialog" aria-modal="false" aria-labelledby="travel-widget-title">
           <div className="widget-header">
@@ -101,19 +133,30 @@ export function FloatingTravelWidget() {
               ))}
             </div>
             <div className="widget-form" aria-label="Mini travel planner">
-              <label><span>Destination</span><input value={destination} onChange={(event) => setDestination(event.target.value)} name="destination" placeholder="e.g. Greece" /></label>
+              <label>
+                <span>Destination</span>
+                <input value={destination} onChange={(event) => setDestination(event.target.value)} name="destination" placeholder="e.g. Greece" aria-describedby="widget-destination-help" />
+              </label>
               <label><span>Budget</span><input value={budget} onChange={(event) => setBudget(event.target.value)} name="budget" placeholder="e.g. £750 pp" /></label>
               <label><span>Month</span><input value={month} onChange={(event) => setMonth(event.target.value)} name="month" placeholder="e.g. August" /></label>
             </div>
+            <p id="widget-destination-help" className={`widget-helper ${hasDestination ? 'is-valid' : ''}`}>
+              {hasDestination ? `Great — we will keep ${destination.trim()} in your search.` : 'Add a destination for tighter matches, or continue with your selected holiday style.'}
+            </p>
+            <a className="widget-saved-row" href="/deals" aria-label={`${savedCount} saved deals. Open deal comparison.`}>
+              <Icon name="heart" />
+              <span>{savedCount > 0 ? `${savedCount} saved ${savedCount === 1 ? 'deal' : 'deals'} ready to compare` : 'Save deals here as you browse'}</span>
+            </a>
             <div className="widget-actions">
               <a href={searchHref}><Icon name="search" />Find matches</a>
-              <a href="/deals"><Icon name="heart" />Compare saved</a>
+              <button type="button" onClick={resetPlanner}><Icon name="close" />Reset</button>
             </div>
           </div>
         </div>
       ) : (
         <button className="travel-widget-button" type="button" onClick={openWidget} aria-label="Open holiday assistant">
-          <Icon name="sparkles" />Plan my holiday
+          <Icon name="sparkles" /><span>Plan trip</span>
+          {savedCount > 0 ? <strong>{savedCount}</strong> : null}
         </button>
       )}
     </aside>

@@ -13,3 +13,11 @@ export const brand: BrandConfig = {
 };
 
 export const brandDisplay = `${brand.name}.${brand.suffix}`;
+
+export function brandUrl(path = '') {
+  return new URL(path, brand.siteUrl).toString();
+}
+
+export function brandOrigin() {
+  return new URL(brand.siteUrl).origin;
+}
