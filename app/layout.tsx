@@ -1,10 +1,24 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
-import { brandDisplay } from '@/lib/brand';
+import './polish.css';
+import { brand, brandDisplay } from '@/lib/brand';
 
 export const metadata: Metadata = {
+  metadataBase: new URL(brand.siteUrl),
   title: `${brandDisplay} | Holiday deals made easy`,
-  description: 'Find and book brilliant holiday deals on hotels and packages worldwide.'
+  description: 'Find and book brilliant holiday deals on hotels and packages worldwide.',
+  openGraph: {
+    title: `${brandDisplay} | Holiday deals made easy`,
+    description: 'Big escapes. Better prices.',
+    url: brand.siteUrl,
+    siteName: brandDisplay,
+    type: 'website'
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${brandDisplay} | Holiday deals made easy`,
+    description: 'Big escapes. Better prices.'
+  }
 };
 
 export const viewport: Viewport = {
@@ -15,7 +29,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en-GB">
       <body>{children}</body>
     </html>
   );
