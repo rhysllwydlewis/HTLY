@@ -3,17 +3,17 @@ import { SiteFooter } from '@/components/SiteFooter';
 import { SiteHeader } from '@/components/SiteHeader';
 import { Hero } from '@/components/home/Hero';
 import { FeaturedDeals, PopularDestinations, PromoBanner, Reviews, TrustStrip, WhyBook } from '@/components/home/HomeSections';
-import { brand, brandDisplay } from '@/lib/brand';
+import { brand, brandDisplay, brandUrl } from '@/lib/brand';
 
 const homeJsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: brandDisplay,
-    url: brand.siteUrl,
+    url: brandUrl('/'),
     potentialAction: {
       '@type': 'SearchAction',
-      target: `${brand.siteUrl}/search?destination={search_term_string}`,
+      target: `${brandUrl('/search')}?destination={search_term_string}`,
       'query-input': 'required name=search_term_string'
     }
   },
@@ -21,10 +21,10 @@ const homeJsonLd = [
     '@context': 'https://schema.org',
     '@type': 'TravelAgency',
     name: brandDisplay,
-    url: brand.siteUrl,
+    url: brandUrl('/'),
     slogan: brand.tagline,
     areaServed: 'GB',
-    sameAs: [brand.siteUrl]
+    sameAs: [brandUrl('/')]
   }
 ];
 

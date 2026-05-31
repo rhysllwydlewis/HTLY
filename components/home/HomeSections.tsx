@@ -32,7 +32,7 @@ export function FeaturedDeals() {
       <div className="container deals-wrap">
         <SectionHead title="Featured holiday deals" kicker="Fresh offers" link="View all deals" href="/deals" />
         <div className="deal-row">
-          {deals.map((deal) => <HolidayDealCard deal={deal} key={deal.resort} />)}
+          {deals.slice(0, 3).map((deal) => <HolidayDealCard deal={deal} key={deal.slug} />)}
         </div>
       </div>
     </section>
