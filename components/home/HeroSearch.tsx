@@ -1,10 +1,17 @@
 import { Icon } from '@/components/Icon';
-import { searchTabs } from '@/lib/holiday-data';
+import { HolidaySearchForm } from '@/components/search/HolidaySearchForm';
+import { deals, destinations, searchTabs } from '@/lib/holiday-data';
+import { defaultHolidaySearchState } from '@/lib/search-state';
+
+const destinationOptions = Array.from(new Set([
+  ...destinations.map((destination) => destination.name),
+  ...deals.flatMap((deal) => [deal.destination, deal.resort, deal.badge, ...deal.tags])
+]));
 
 export function HeroSearch() {
   return (
     <div className="container search-shell">
-      <form className="search-card glass-card" action="/search" aria-label="Search holidays">
+      <div className="search-card glass-card" aria-label="Search holidays">
         <div className="search-card-head">
           <div>
             <span className="micro-label">Start planning</span>
@@ -19,38 +26,8 @@ export function HeroSearch() {
             </button>
           ))}
         </div>
-        <div className="search-fields">
-          <label className="search-field search-field-destination">
-            <Icon name="pin" className="field-icon" />
-            <span className="field-copy">
-              <span className="field-label">Where to?</span>
-              <input name="destination" placeholder="Search destinations or hotels" aria-label="Destination" />
-            </span>
-          </label>
-          <label className="search-field">
-            <span className="field-copy">
-              <span className="field-label">Check-in</span>
-              <input name="check-in" type="text" defaultValue="12 Jun 2026" aria-label="Check-in date" />
-            </span>
-            <Icon name="calendar" className="field-icon" />
-          </label>
-          <label className="search-field">
-            <span className="field-copy">
-              <span className="field-label">Check-out</span>
-              <input name="check-out" type="text" defaultValue="19 Jun 2026" aria-label="Check-out date" />
-            </span>
-            <Icon name="calendar" className="field-icon" />
-          </label>
-          <label className="search-field">
-            <Icon name="guests" className="field-icon" />
-            <span className="field-copy">
-              <span className="field-label">Guests & rooms</span>
-              <input name="guests" type="text" defaultValue="2 Adults, 1 Room" aria-label="Guests and rooms" />
-            </span>
-          </label>
-          <button className="search-cta" type="submit"><Icon name="search" />Search deals</button>
-        </div>
-      </form>
+        <HolidaySearchForm initialState={{ ...defaultHolidaySearchState, checkIn: '2026-06-12', checkOut: '2026-06-19' }} destinationOptions={destinationOptions} />
+      </div>
     </div>
   );
 }

@@ -16,7 +16,7 @@ export function getSavedDealSlugs() {
   }
 }
 
-function writeSavedDeals(slugs: string[]) {
+export function writeSavedDeals(slugs: string[]) {
   try {
     window.localStorage.setItem(savedDealsStorageKey, JSON.stringify(slugs));
     window.dispatchEvent(new CustomEvent(savedDealsChangedEvent, { detail: { slugs } }));

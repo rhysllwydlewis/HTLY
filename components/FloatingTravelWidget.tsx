@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { Icon } from '@/components/Icon';
 import { getSavedDealSlugs, savedDealsChangedEvent } from '@/components/SaveDealButton';
+import { SavedDealsDrawer } from '@/components/SavedDealsDrawer';
+import { buildHolidaySearchParams } from '@/lib/search-state';
 
 const intents = ['Beach', 'Family', 'Luxury', 'All-inclusive', 'Budget', 'City break'];
 const defaultStyle = 'Beach';
@@ -25,6 +27,7 @@ export function FloatingTravelWidget() {
   const [budget, setBudget] = useState('');
   const [month, setMonth] = useState('');
   const [savedCount, setSavedCount] = useState(0);
+  const [isSavedDrawerOpen, setIsSavedDrawerOpen] = useState(false);
   const hasDestination = destination.trim().length > 0;
   const isProductFlow = pathname?.startsWith('/search') || pathname?.startsWith('/deals');
 
@@ -71,11 +74,7 @@ export function FloatingTravelWidget() {
   }, [budget, destination, isMounted, month, style]);
 
   const searchHref = useMemo(() => {
-    const params = new URLSearchParams();
-    if (destination.trim()) params.set('destination', destination.trim());
-    if (budget.trim()) params.set('budget', budget.trim());
-    if (month.trim()) params.set('month', month.trim());
-    if (style) params.set('style', style);
+    const params = buildHolidaySearchParams({ destination, maxBudget: budget, month, style });
     const query = params.toString();
     return query ? `/search?${query}` : '/search';
   }, [budget, destination, month, style]);
@@ -143,10 +142,10 @@ export function FloatingTravelWidget() {
             <p id="widget-destination-help" className={`widget-helper ${hasDestination ? 'is-valid' : ''}`}>
               {hasDestination ? `Great — we will keep ${destination.trim()} in your search.` : 'Add a destination for tighter matches, or continue with your selected holiday style.'}
             </p>
-            <a className="widget-saved-row" href="/deals" aria-label={`${savedCount} saved deals. Open deal comparison.`}>
+            <button className="widget-saved-row" type="button" onClick={() => setIsSavedDrawerOpen(true)} aria-label={`${savedCount} saved deals. Open deal comparison.`}>
               <Icon name="heart" />
               <span>{savedCount > 0 ? `${savedCount} saved ${savedCount === 1 ? 'deal' : 'deals'} ready to compare` : 'Save deals here as you browse'}</span>
-            </a>
+            </button>
             <div className="widget-actions">
               <a href={searchHref}><Icon name="search" />Find matches</a>
               <button type="button" onClick={resetPlanner}><Icon name="close" />Reset</button>
@@ -154,11 +153,18 @@ export function FloatingTravelWidget() {
           </div>
         </div>
       ) : (
-        <button className="travel-widget-button" type="button" onClick={openWidget} aria-label="Open holiday assistant">
-          <Icon name="sparkles" /><span>Plan trip</span>
-          {savedCount > 0 ? <strong>{savedCount}</strong> : null}
-        </button>
+        <div className="travel-widget-closed-actions">
+          {savedCount > 0 ? (
+            <button className="travel-widget-compare-button" type="button" onClick={() => setIsSavedDrawerOpen(true)} aria-label={`${savedCount} saved deals. Open deal comparison.`}>
+              <Icon name="heart" /><span>Compare</span><strong>{savedCount}</strong>
+            </button>
+          ) : null}
+          <button className="travel-widget-button" type="button" onClick={openWidget} aria-label="Open holiday assistant">
+            <Icon name="sparkles" /><span>Plan trip</span>
+          </button>
+        </div>
       )}
+      <SavedDealsDrawer open={isSavedDrawerOpen} onOpenChange={setIsSavedDrawerOpen} />
     </aside>
   );
 }
