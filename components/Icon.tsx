@@ -48,249 +48,206 @@ export function Icon({ name, className = '', label }: IconProps) {
 
     bed: (
       <>
-        <path d="M2 8v13M22 8v13M2 14h20" />
-        <path d="M2 8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2" />
-        <path d="M7 14v-3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3" />
+        <path d="M3 20V9" />
+        <path d="M21 20v-5a3 3 0 0 0-3-3H9v8" />
+        <path d="M3 15h18" />
+        <path d="M6.5 12A2.5 2.5 0 1 0 6.5 7a2.5 2.5 0 0 0 0 5Z" />
       </>
     ),
 
     plane: (
       <>
-        <path d="M20.5 12 12 18l.5-5L5 10l7-2.5L11 4l9.5 8Z" />
-        <path d="M4 19.5h7" />
+        <path d="M3 11.5 21 3l-8.5 18-2.2-7.3L3 11.5Z" />
+        <path d="M10.3 13.7 21 3" />
       </>
     ),
 
     flightHotel: (
       <>
-        <path d="M2 14.5 8 11l-.5 3.5 4-1.5L13 16" strokeWidth="1.6" />
-        <path d="M2 18h8" strokeWidth="1.6" />
-        <rect x="15" y="11" width="8" height="10" rx="1" strokeWidth="1.6" />
-        <path d="M15 15.5h8" strokeWidth="1.6" />
-        <path d="M17.5 11V9a1 1 0 0 1 1-1H20" strokeWidth="1.5" />
+        <path d="M3 11.5 12 7l-4 9-1.3-4.2L3 11.5Z" />
+        <path d="M13 21V10a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2v11" />
+        <path d="M11 21h12" />
+        <path d="M16 12h.01M19 12h.01M16 16h.01M19 16h.01" />
       </>
     ),
 
     sun: (
       <>
-        <circle cx="12" cy="12" r="4.5" />
-        <path d="M12 2.5v2M12 19.5v2M4.22 4.72l1.42 1.42M18.36 18.36l1.42 1.42M2.5 12h2M19.5 12h2M4.22 19.28l1.42-1.42M18.36 5.64l1.42-1.42" />
-      </>
-    ),
-
-    /* ── Search & navigation ───────────────────────── */
-    search: (
-      <>
-        <circle cx="10.5" cy="10.5" r="6.5" />
-        <path d="m20.5 20.5-4-4" />
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
       </>
     ),
 
     pin: (
       <>
-        <path d="M12 21.5S5 15.8 5 10a7 7 0 1 1 14 0c0 5.8-7 11.5-7 11.5Z" />
-        <circle cx="12" cy="10" r="2.5" />
+        <path d="M12 21s7-4.7 7-11a7 7 0 1 0-14 0c0 6.3 7 11 7 11Z" />
+        <circle cx="12" cy="10" r="2.4" />
       </>
     ),
 
-    tag: (
+    calendar: (
       <>
-        <path d="M21.41 11.58 12.41 2.58A2 2 0 0 0 11 2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 .59 1.42l9 9a2 2 0 0 0 2.82 0l7-7a2 2 0 0 0 0-2.84Z" />
-        <circle cx="7.5" cy="7.5" r=".75" fill="currentColor" stroke="none" />
-      </>
-    ),
-
-    chevron: (
-      <path d="m9 18 6-6-6-6" />
-    ),
-
-    arrowRight: (
-      <>
-        <path d="M5 12h14" />
-        <path d="m12 5 7 7-7 7" />
-      </>
-    ),
-
-    sliders: (
-      <>
-        <path d="M4 6h16M4 12h16M4 18h16" />
-        <circle cx="16" cy="6" r="2" />
-        <circle cx="8" cy="12" r="2" />
-        <circle cx="14" cy="18" r="2" />
-      </>
-    ),
-
-    menu: (
-      <>
-        <path d="M3 6h18M3 12h14M3 18h18" />
-      </>
-    ),
-
-    close: (
-      <path d="M6 6l12 12M18 6 6 18" />
-    ),
-
-    check: (
-      <path d="m20 6-11 11-5-5" strokeWidth="2" />
-    ),
-
-    compare: (
-      <>
-        <path d="M10 3H5a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h5" />
-        <path d="M14 3h5a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-5" />
-        <path d="M12 3v18" strokeDasharray="3 2" />
-      </>
-    ),
-
-    /* ── Users & account ───────────────────────────── */
-    user: (
-      <>
-        <circle cx="12" cy="8" r="4" />
-        <path d="M4 20c0-4 3.58-7 8-7s8 3 8 7" />
+        <rect x="3" y="5" width="18" height="16" rx="2" />
+        <path d="M8 3v4M16 3v4M3 10h18" />
       </>
     ),
 
     guests: (
       <>
-        <circle cx="10" cy="8" r="3.5" />
-        <path d="M2 20c0-3.5 3.58-6 8-6" />
+        <circle cx="9" cy="8" r="3" />
+        <path d="M3.5 20a5.5 5.5 0 0 1 11 0" />
         <circle cx="17" cy="9" r="2.5" />
-        <path d="M22 20c0-2.8-2.24-5-5-5M14.5 20c-.14-1.76-1-4-4.5-4.8" />
-      </>
-    ),
-
-    /* ── Calendar & time ───────────────────────────── */
-    calendar: (
-      <>
-        <rect x="3" y="5" width="18" height="17" rx="2" />
-        <path d="M3 10h18M8 3v4M16 3v4" />
-        <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M15.5 16.2A4.5 4.5 0 0 1 21 20" />
       </>
     ),
 
     clock: (
       <>
         <circle cx="12" cy="12" r="9" />
-        <path d="M12 7v5l3.5 2" />
-      </>
-    ),
-
-    /* ── Trust & security ──────────────────────────── */
-    shield: (
-      <>
-        <path d="M12 22S4 17.2 4 11V5l8-3 8 3v6c0 6.2-8 11-8 11Z" />
-        <path d="m9 12 2 2 4-4.5" />
-      </>
-    ),
-
-    atol: (
-      <>
-        <path d="M12 3 4 7v6.5C4 18.5 7.5 22.2 12 23c4.5-.8 8-4.5 8-9.5V7L12 3Z" />
-        <path d="M9.5 14h5M12 8.5V14" strokeWidth="1.6" />
-      </>
-    ),
-
-    lock: (
-      <>
-        <rect x="4" y="11" width="16" height="10" rx="2" />
-        <path d="M8 11V7a4 4 0 0 1 8 0v4" />
-        <circle cx="12" cy="16" r="1.5" fill="currentColor" stroke="none" />
-      </>
-    ),
-
-    card: (
-      <>
-        <rect x="2" y="5" width="20" height="14" rx="2" />
-        <path d="M2 10h20M7 15h4M15 15h2" />
+        <path d="M12 7.5V12l3 2" />
       </>
     ),
 
     uk: (
       <>
-        <circle cx="12" cy="12" r="9" />
-        <path d="M12 3v18M3 12h18" />
-        <path d="M5.3 5.3 18.7 18.7M18.7 5.3 5.3 18.7" strokeWidth="1.2" />
+        <rect x="3" y="5" width="18" height="14" rx="1.5" />
+        <path d="M3 5l18 14M21 5 3 19" />
+        <path d="M12 5v14M3 12h18" />
       </>
     ),
 
-    /* ── Communication ─────────────────────────────── */
+    atol: (
+      <>
+        <rect x="3" y="5" width="18" height="14" rx="2.5" />
+        <path d="M7 15l2.2-6h1.6L13 15" />
+        <path d="M8.1 12.4h3.8" />
+        <path d="M15 9v6h4" />
+      </>
+    ),
+
+    /* ── Actions / UI ───────────────────────────────── */
+    tag: (
+      <>
+        <path d="M20 13.5 13.5 20 4 10.5V4h6.5L20 13.5Z" />
+        <circle cx="8" cy="8" r="1" />
+      </>
+    ),
+
+    user: (
+      <>
+        <circle cx="12" cy="8" r="4" />
+        <path d="M4 21a8 8 0 0 1 16 0" />
+      </>
+    ),
+
+    search: (
+      <>
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.6-3.6" />
+      </>
+    ),
+
+    shield: (
+      <>
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
+        <path d="M9 12l2 2 4-5" />
+      </>
+    ),
+
     headset: (
       <>
-        <path d="M5 15V10a7 7 0 0 1 14 0v5" />
-        <path d="M3.5 15h3v4.5h-3a1 1 0 0 1-1-1v-2.5a1 1 0 0 1 1-1ZM20.5 15h-3v4.5h3a1 1 0 0 0 1-1v-2.5a1 1 0 0 0-1-1Z" />
-        <path d="M20 19.5V21a3 3 0 0 1-3 3h-2" />
+        <path d="M4 13a8 8 0 0 1 16 0" />
+        <path d="M4 13v3a2 2 0 0 0 2 2h1v-7H6a2 2 0 0 0-2 2Z" />
+        <path d="M20 13v3a2 2 0 0 1-2 2h-1v-7h1a2 2 0 0 1 2 2Z" />
+        <path d="M14 20h-3" />
       </>
     ),
 
-    bell: (
-      <>
-        <path d="M18 9A6 6 0 0 0 6 9c0 7-3 7.5-3 7.5h18S21 16 21 9Z" />
-        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-      </>
-    ),
-
-    mail: (
-      <>
-        <rect x="2" y="4" width="20" height="16" rx="2" />
-        <path d="m2 6 10 7 10-7" />
-      </>
-    ),
-
-    /* ── Ratings & interactions ────────────────────── */
     heart: (
-      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.5l8.84-9.11a5.5 5.5 0 0 0 0-7.78Z" />
+      <path d="M20.8 4.6a5.4 5.4 0 0 0-7.6 0L12 5.8l-1.2-1.2a5.4 5.4 0 1 0-7.6 7.6L12 21l8.8-8.8a5.4 5.4 0 0 0 0-7.6Z" />
     ),
 
     star: (
-      <path d="m12 2 2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6L12 2Z" />
+      <path d="M12 2.5l3 6.1 6.7 1-4.9 4.8 1.2 6.7-6-3.2-6 3.2 1.2-6.7-4.9-4.8 6.7-1 3-6.1Z" />
     ),
 
+    card: (
+      <>
+        <rect x="3" y="5" width="18" height="14" rx="2" />
+        <path d="M3 10h18M7 15h3" />
+      </>
+    ),
+
+    lock: (
+      <>
+        <rect x="4" y="10" width="16" height="11" rx="2" />
+        <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+      </>
+    ),
+
+    menu: <path d="M4 7h16M4 12h16M4 17h16" />,
+    close: <path d="M6 6l12 12M18 6 6 18" />,
+    check: <path d="M20 6 9 17l-5-5" />,
+    chevron: <path d="M9 18l6-6-6-6" />,
+    arrowRight: <path d="M5 12h14M13 6l6 6-6 6" />,
+    mail: (
+      <>
+        <rect x="3" y="5" width="18" height="14" rx="2" />
+        <path d="M3 7l9 6 9-6" />
+      </>
+    ),
+    compare: (
+      <>
+        <path d="M8 5v14M16 5v14" />
+        <path d="M4 8h8M12 16h8" />
+      </>
+    ),
+    sliders: (
+      <>
+        <path d="M4 6h10M18 6h2M4 12h2M10 12h10M4 18h8M16 18h4" />
+        <circle cx="16" cy="6" r="2" />
+        <circle cx="8" cy="12" r="2" />
+        <circle cx="14" cy="18" r="2" />
+      </>
+    ),
     sparkles: (
       <>
-        <path d="m12 3 1.5 4.5 4.5 1.5-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3Z" />
-        <path d="m5 16 .8 2.2 2.2.8-2.2.8L5 22l-.8-2.2L2 19l2.2-.8L5 16Z" />
-        <path d="m19 16 .8 2.2 2.2.8-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z" />
+        <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3Z" />
+        <path d="M5 14l.8 2.2L8 17l-2.2.8L5 20l-.8-2.2L2 17l2.2-.8L5 14ZM19 14l.8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8L19 14Z" />
+      </>
+    ),
+    bell: (
+      <>
+        <path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+        <path d="M13.7 21a2 2 0 0 1-3.4 0" />
       </>
     ),
 
-    /* ── Social (fill-based) ───────────────────────── */
-    facebook: (
-      <path
-        d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3Z"
-        fill="currentColor"
-        stroke="none"
-      />
-    ),
-
+    /* ── Social icons (fill based) ─────────────────── */
+    facebook: <path d="M14 8.5h2V5.2c-.35-.05-1.55-.15-2.95-.15-2.92 0-4.92 1.84-4.92 5.2v3.1H5v3.7h3.13V24h3.85v-6.95h3.02l.48-3.7h-3.5v-2.73c0-1.07.29-2.12 2.02-2.12Z" />,
     instagram: (
       <>
-        <rect x="2" y="2" width="20" height="20" rx="5" />
-        <circle cx="12" cy="12" r="4.5" />
-        <circle cx="17.5" cy="6.5" r="1.25" fill="currentColor" stroke="none" />
+        <rect x="4" y="4" width="16" height="16" rx="5" />
+        <circle cx="12" cy="12" r="3.5" />
+        <circle cx="17" cy="7" r=".8" fill="currentColor" stroke="none" />
       </>
     ),
-
-    tiktok: (
-      <path d="M9 12a4 4 0 1 0 4 4V4a6.5 6.5 0 0 0 6.5 4.5" />
-    ),
-
-    youtube: (
-      <>
-        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.96-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58Z" />
-        <path d="M10 15.5V8.5l6.5 3.5-6.5 3.5Z" fill="currentColor" stroke="none" />
-      </>
-    ),
+    tiktok: <path d="M16.5 3c.4 2.3 1.7 3.7 4 4v3.2a7.7 7.7 0 0 1-4-1.2v6.4c0 3.4-2.2 5.6-5.5 5.6A5.2 5.2 0 1 1 11 10.6c.4 0 .8.04 1.2.13v3.45a2.3 2.3 0 1 0 1.4 2.12V3h2.9Z" />,
+    youtube: <path d="M21.6 7.2s-.2-1.6-.8-2.3c-.8-.9-1.7-.9-2.1-1C15.7 3.6 12 3.6 12 3.6h0s-3.7 0-6.7.3c-.4.1-1.3.1-2.1 1-.6.7-.8 2.3-.8 2.3S2.2 9.1 2.2 11v1.8c0 1.9.2 3.8.2 3.8s.2 1.6.8 2.3c.8.9 1.9.9 2.4 1 1.7.2 6.4.3 6.4.3s3.7 0 6.7-.3c.4-.1 1.3-.1 2.1-1 .6-.7.8-2.3.8-2.3s.2-1.9.2-3.8V11c0-1.9-.2-3.8-.2-3.8ZM10.1 15.4V8.6l6.1 3.4-6.1 3.4Z" />,
   };
+
+  const isFillIcon = ['facebook', 'tiktok', 'youtube'].includes(name);
 
   return (
     <svg
-      className={`svg-icon ${className}`}
+      className={`svg-icon ${className}`.trim()}
       viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.75}
+      fill={isFillIcon ? 'currentColor' : 'none'}
+      stroke={isFillIcon ? 'none' : 'currentColor'}
+      strokeWidth="1.75"
       strokeLinecap="round"
       strokeLinejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
       {...ariaProps}
     >
       {paths[name]}
