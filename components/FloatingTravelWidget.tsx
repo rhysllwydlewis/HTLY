@@ -1,37 +1,65 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { Icon } from '@/components/Icon';
 
-type IconName = 'sparkles' | 'search' | 'heart' | 'close';
+const intents = ['Beach', 'Family', 'Luxury', 'All-inclusive', 'Budget', 'City break'];
+const plannerStorageKey = 'htly-travel-widget-plan';
 
-function Icon({ name }: { name: IconName }) {
-  const paths = {
-    sparkles: <><path d="m12 3 1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3ZM5 14l.8 2.2L8 17l-2.2.8L5 20l-.8-2.2L2 17l2.2-.8L5 14ZM19 14l.8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8L19 14Z" /></>,
-    search: <><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></>,
-    heart: <><path d="M20.8 4.6a5.4 5.4 0 0 0-7.6 0L12 5.8l-1.2-1.2a5.4 5.4 0 0 0-7.6 7.6L12 21l8.8-8.8a5.4 5.4 0 0 0 0-7.6Z" /></>,
-    close: <><path d="M6 6l12 12M18 6 6 18" /></>
-  } satisfies Record<IconName, JSX.Element>;
-
-  return (
-    <svg className="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      {paths[name]}
-    </svg>
-  );
-}
+type PlannerState = {
+  style: string;
+  destination: string;
+  budget: string;
+  month: string;
+};
 
 export function FloatingTravelWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [style, setStyle] = useState('Beach');
+  const [destination, setDestination] = useState('');
+  const [budget, setBudget] = useState('');
+  const [month, setMonth] = useState('');
 
   useEffect(() => {
     setIsMounted(true);
 
     try {
       setIsOpen(window.localStorage.getItem('htly-travel-widget') !== 'closed');
+
+      const savedPlan = window.localStorage.getItem(plannerStorageKey);
+      if (savedPlan) {
+        const parsedPlan = JSON.parse(savedPlan) as Partial<PlannerState>;
+        if (typeof parsedPlan.style === 'string' && intents.includes(parsedPlan.style)) setStyle(parsedPlan.style);
+        if (typeof parsedPlan.destination === 'string') setDestination(parsedPlan.destination);
+        if (typeof parsedPlan.budget === 'string') setBudget(parsedPlan.budget);
+        if (typeof parsedPlan.month === 'string') setMonth(parsedPlan.month);
+      }
     } catch {
       setIsOpen(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+
+    try {
+      const plannerState: PlannerState = { style, destination, budget, month };
+      window.localStorage.setItem(plannerStorageKey, JSON.stringify(plannerState));
+    } catch {
+      // Storage can be unavailable in private or restricted browsing modes.
+    }
+  }, [budget, destination, isMounted, month, style]);
+
+  const searchHref = useMemo(() => {
+    const params = new URLSearchParams();
+    if (destination.trim()) params.set('destination', destination.trim());
+    if (budget.trim()) params.set('budget', budget.trim());
+    if (month.trim()) params.set('month', month.trim());
+    if (style) params.set('style', style);
+    const query = params.toString();
+    return query ? `/search?${query}` : '/search';
+  }, [budget, destination, month, style]);
 
   function rememberWidgetState(value: 'open' | 'closed') {
     try {
@@ -58,22 +86,34 @@ export function FloatingTravelWidget() {
   return (
     <aside className={`travel-widget ${isOpen ? 'is-open' : 'is-closed'}`} aria-label="Holiday assistant widget">
       {isOpen ? (
-        <div className="travel-widget-panel glass-card" role="dialog" aria-label="Need help choosing a holiday">
+        <div className="travel-widget-panel glass-card" role="dialog" aria-modal="false" aria-labelledby="travel-widget-title">
           <div className="widget-header">
-            <span><Icon name="sparkles" />Need help choosing?</span>
+            <span id="travel-widget-title"><Icon name="sparkles" />Plan a smarter trip</span>
             <button type="button" onClick={closeWidget} aria-label="Close holiday assistant"><Icon name="close" /></button>
           </div>
           <div className="widget-body">
-            <p>Tell us your dates, budget and holiday style. We will help shortlist resorts, saved deals and flexible options.</p>
+            <p>Shortlist a holiday style, budget and travel month. We will send you into search with the right context.</p>
+            <div className="widget-intents" aria-label="Quick holiday intents">
+              {intents.map((intent) => (
+                <button key={intent} type="button" className={style === intent ? 'is-selected' : ''} aria-pressed={style === intent} onClick={() => setStyle(intent)}>
+                  {intent}
+                </button>
+              ))}
+            </div>
+            <div className="widget-form" aria-label="Mini travel planner">
+              <label><span>Destination</span><input value={destination} onChange={(event) => setDestination(event.target.value)} name="destination" placeholder="e.g. Greece" /></label>
+              <label><span>Budget</span><input value={budget} onChange={(event) => setBudget(event.target.value)} name="budget" placeholder="e.g. £750 pp" /></label>
+              <label><span>Month</span><input value={month} onChange={(event) => setMonth(event.target.value)} name="month" placeholder="e.g. August" /></label>
+            </div>
             <div className="widget-actions">
-              <a href="/search"><Icon name="search" />Find deals</a>
+              <a href={searchHref}><Icon name="search" />Find matches</a>
               <a href="/deals"><Icon name="heart" />Compare saved</a>
             </div>
           </div>
         </div>
       ) : (
         <button className="travel-widget-button" type="button" onClick={openWidget} aria-label="Open holiday assistant">
-          <Icon name="sparkles" />Need help choosing?
+          <Icon name="sparkles" />Plan my holiday
         </button>
       )}
     </aside>
