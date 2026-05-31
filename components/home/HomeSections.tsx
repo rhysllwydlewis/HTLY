@@ -206,7 +206,7 @@ export function Reviews() {
           {reviews.map((review) => (
             <article className="review glass-card" key={review.person}>
               <GreenStars />
-              <strong>"{review.title}"</strong>
+              <strong>&ldquo;{review.title}&rdquo;</strong>
               <p>{review.quote}</p>
               <small>— {review.person}</small>
             </article>
