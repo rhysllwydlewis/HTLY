@@ -1,32 +1,76 @@
+'use client';
+
+import { useState } from 'react';
 import { Icon } from '@/components/Icon';
 import { HolidaySearchForm } from '@/components/search/HolidaySearchForm';
-import { deals, destinations, searchTabs } from '@/lib/holiday-data';
+import { searchTabs } from '@/lib/holiday-data';
 import { defaultHolidaySearchState } from '@/lib/search-state';
 
-const destinationOptions = Array.from(new Set([
-  ...destinations.map((destination) => destination.name),
-  ...deals.flatMap((deal) => [deal.destination, deal.resort, deal.badge, ...deal.tags])
-]));
+type HeroSearchProps = {
+  destinationOptions: string[];
+};
 
-export function HeroSearch() {
+export function HeroSearch({ destinationOptions }: HeroSearchProps) {
+  const [activeTab, setActiveTab] = useState(0);
+  const currentTabStyle = searchTabs[activeTab]?.style ?? '';
+
   return (
     <div className="container search-shell">
       <div className="search-card glass-card" aria-label="Search holidays">
+
+        {/* Header */}
         <div className="search-card-head">
           <div>
             <span className="micro-label">Start planning</span>
             <strong>Find your perfect holiday</strong>
           </div>
-          <span className="deal-alert"><Icon name="bell" />Deal alerts ready</span>
+          <span className="deal-alert">
+            <Icon name="bell" aria-hidden="true" />
+            Deal alerts ready
+          </span>
         </div>
-        <div className="search-tabs" aria-label="Holiday search type">
+
+        {/* Tab switcher */}
+        <div
+          className="search-tabs"
+          role="tablist"
+          aria-label="Choose holiday search type"
+        >
           {searchTabs.map((tab, index) => (
-            <button key={tab.label} className="search-tab" type="button" aria-pressed={index === 0}>
-              <Icon name={tab.icon} />{tab.label}
+            <button
+              key={tab.label}
+              id={`search-tab-${index}`}
+              className="search-tab"
+              type="button"
+              role="tab"
+              aria-selected={index === activeTab}
+              aria-pressed={index === activeTab}
+              aria-controls="search-panel"
+              onClick={() => setActiveTab(index)}
+            >
+              <Icon name={tab.icon} aria-hidden="true" />
+              {tab.label}
             </button>
           ))}
         </div>
-        <HolidaySearchForm initialState={{ ...defaultHolidaySearchState, checkIn: '2026-06-12', checkOut: '2026-06-19' }} destinationOptions={destinationOptions} />
+
+        {/* Form — re-mounts on tab change so initialState is fresh */}
+        <div
+          id="search-panel"
+          role="tabpanel"
+          aria-labelledby={`search-tab-${activeTab}`}
+        >
+          <HolidaySearchForm
+            key={activeTab}
+            initialState={{
+              ...defaultHolidaySearchState,
+              checkIn: '2026-06-12',
+              checkOut: '2026-06-19',
+              style: currentTabStyle,
+            }}
+            destinationOptions={destinationOptions}
+          />
+        </div>
       </div>
     </div>
   );
