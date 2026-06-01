@@ -1796,3 +1796,326 @@
   .not-found-code { font-size: 90px; }
   .not-found-copy h1 { font-size: 32px; }
 }
+
+/* =============================================================
+   HTLY Polish v5 — Logo SVG, premium glass, ABTA/Trustpilot,
+   typography refinements, improved trust badges
+   =============================================================*/
+
+/* ── SVG brand mark ─────────────────────────────────────── */
+.brand-mark-svg {
+  display: block;
+  flex-shrink: 0;
+  border-radius: 13px;
+  /* Layered drop-shadow: ambient + lift */
+  filter:
+    drop-shadow(0 1px 0 rgba(255,255,255,.28))
+    drop-shadow(0 14px 28px rgba(0,60,170,.32))
+    drop-shadow(0 4px 8px rgba(0,50,140,.18));
+  transition: filter var(--t, 180ms) var(--ease, cubic-bezier(.4,0,.2,1)),
+              transform var(--t, 180ms) var(--ease, cubic-bezier(.4,0,.2,1));
+}
+.brand:hover .brand-mark-svg {
+  filter:
+    drop-shadow(0 1px 0 rgba(255,255,255,.3))
+    drop-shadow(0 18px 38px rgba(0,60,170,.4))
+    drop-shadow(0 6px 12px rgba(0,50,140,.22));
+  transform: translateY(-1px) scale(1.02);
+}
+.brand--footer .brand-mark-svg { border-radius: 11px; }
+
+/* Remove old CSS-based brand-mark spans if still present */
+.brand-mark .sun, .brand-mark .ray, .brand-mark .wave { display: none; }
+.brand-mark::before { display: none; }
+
+/* ── Premium glass — card variants ─────────────────────── */
+
+/* Search card: strongest glass, very luminous */
+.search-card {
+  background: linear-gradient(160deg, rgba(255,255,255,.97) 0%, rgba(255,255,255,.88) 100%) !important;
+  box-shadow:
+    0 40px 80px rgba(8,37,72,.20),
+    0 8px 24px rgba(8,37,72,.10),
+    inset 0 1px 0 rgba(255,255,255,1) !important;
+  backdrop-filter: blur(28px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
+}
+
+/* Why cards: tinted blue-white glass */
+.why-card {
+  background: linear-gradient(
+    160deg,
+    rgba(255,255,255,.97) 0%,
+    rgba(238,248,255,.88) 100%
+  ) !important;
+  box-shadow:
+    0 10px 32px rgba(8,37,72,.08),
+    inset 0 1px 0 rgba(255,255,255,.9) !important;
+}
+
+/* Deal cards: crisp white with bottom warmth */
+.deal-card {
+  background: linear-gradient(180deg, #fff 0%, #fafcff 100%) !important;
+  box-shadow:
+    0 20px 50px rgba(8,37,72,.12),
+    0 4px 12px rgba(8,37,72,.06),
+    inset 0 1px 0 rgba(255,255,255,1) !important;
+}
+
+/* Trust items: frosted */
+.trust-item {
+  background: linear-gradient(160deg, rgba(255,255,255,.97), rgba(240,249,255,.88)) !important;
+  box-shadow:
+    0 8px 24px rgba(8,37,72,.07),
+    inset 0 1px 0 rgba(255,255,255,.9) !important;
+}
+
+/* Score / review cards */
+.score, .review {
+  background: linear-gradient(160deg, rgba(255,255,255,.97), rgba(248,252,255,.88)) !important;
+  box-shadow:
+    0 10px 28px rgba(8,37,72,.08),
+    inset 0 1px 0 rgba(255,255,255,.9) !important;
+}
+
+/* Price panel on deal detail */
+.price-panel {
+  background: linear-gradient(160deg, rgba(255,255,255,.98), rgba(238,248,255,.9)) !important;
+  box-shadow:
+    0 20px 50px rgba(8,37,72,.16),
+    inset 0 1px 0 rgba(255,255,255,1) !important;
+}
+
+/* Promo save badge */
+.promo-save {
+  background: linear-gradient(160deg, rgba(255,255,255,.28), rgba(255,255,255,.12)) !important;
+  box-shadow:
+    0 0 0 1px rgba(253,186,30,.45),
+    inset 0 1px 0 rgba(255,255,255,.3) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+/* ── Enhanced typography ──────────────────────────────── */
+
+/* Hero headline: tighter, more impactful */
+.hero-copy h1 {
+  font-size: clamp(54px, 7.5vw, 92px) !important;
+  letter-spacing: -.085em !important;
+  line-height: .87 !important;
+  font-weight: 950 !important;
+}
+
+/* Section h2: tighter */
+.section-head h2,
+.section h2,
+.why h2,
+.reviews h2 {
+  letter-spacing: -.06em !important;
+}
+
+/* Deal body h3: tighter */
+.deal-body h3 {
+  letter-spacing: -.045em !important;
+}
+
+/* Price: bigger and tighter */
+.deal-foot strong {
+  font-size: 28px !important;
+  letter-spacing: -.06em !important;
+  color: var(--navy-dark) !important;
+}
+
+/* ── Trust badge row in footer ────────────────────────── */
+.badges {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(210,226,244,.55);
+}
+
+.trust-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 8px 16px;
+  border-radius: 16px;
+  border: 1.5px solid rgba(210,226,244,.8);
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 4px 14px rgba(8,37,72,.06);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.trust-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(8,37,72,.1);
+}
+
+/* ABTA badge */
+.trust-badge--abta { border-color: #00205b; }
+.trust-badge--abta .trust-badge-logo {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 30px;
+  border-radius: 6px;
+  background: #00205b;
+}
+.trust-badge--abta strong { display: block; color: #00205b; font-size: 13px; font-weight: 950; line-height: 1.1; }
+.trust-badge--abta small  { display: block; color: #607086; font-size: 11px; font-weight: 750; }
+
+/* ATOL badge */
+.trust-badge--atol { border-color: rgba(0,91,187,.25); }
+.trust-badge--atol .svg-icon { width: 22px; height: 22px; color: var(--blue); }
+.trust-badge--atol strong { display: block; color: var(--blue); font-size: 13px; font-weight: 950; line-height: 1.1; }
+.trust-badge--atol small  { display: block; color: #607086; font-size: 11px; font-weight: 750; }
+
+/* Trustpilot badge */
+.trust-badge--tp { border-color: rgba(0,182,122,.25); }
+.tp-stars { display: flex; gap: 2px; }
+.trust-badge--tp strong { display: block; color: #00b67a; font-size: 13px; font-weight: 950; line-height: 1.1; }
+.trust-badge--tp small  { display: block; color: #607086; font-size: 11px; font-weight: 750; }
+
+/* ── Footer copyright row ─────────────────────────────── */
+.footer-copyright-row {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(210,226,244,.5);
+  color: #8a9ab5;
+  font-size: 11.5px;
+}
+.footer-copyright-row a { color: #8a9ab5; text-decoration: none; }
+.footer-copyright-row a:hover { color: var(--blue); }
+
+/* ── Search tabs: sharper active pill ─────────────────── */
+.search-tab[aria-selected="true"],
+.search-tab[aria-pressed="true"] {
+  background: #fff !important;
+  color: var(--blue) !important;
+  box-shadow:
+    0 8px 20px rgba(8,37,72,.10),
+    0 2px 6px rgba(8,37,72,.06),
+    inset 0 1px 0 rgba(255,255,255,1) !important;
+}
+
+/* ── Search fields: deeper focus glow ─────────────────── */
+.destination-input-wrap:focus-within,
+.date-range-picker:focus-within,
+.guest-room-picker:focus-within {
+  border-color: rgba(0,82,204,.5) !important;
+  box-shadow: 0 0 0 4px rgba(0,82,204,.09), 0 4px 16px rgba(0,82,204,.1) !important;
+}
+
+/* ── Floating widget panel: deeper glass ──────────────── */
+.travel-widget-panel {
+  background: linear-gradient(160deg, rgba(255,255,255,.97) 0%, rgba(238,248,255,.92) 100%) !important;
+  box-shadow:
+    0 32px 72px rgba(8,37,72,.22),
+    inset 0 1px 0 rgba(255,255,255,1) !important;
+}
+
+/* ── Deal image: improved gradient overlay ────────────── */
+.deal-img::after {
+  background: linear-gradient(180deg,
+    rgba(0,0,0,0) 38%,
+    rgba(0,0,0,.06) 68%,
+    rgba(0,0,0,.22) 100%
+  ) !important;
+}
+
+/* ── Destination cards: richer overlay ───────────────── */
+.destination-card::after {
+  background: linear-gradient(180deg,
+    rgba(13,43,69,0) 22%,
+    rgba(13,43,69,.6) 64%,
+    rgba(13,43,69,.92) 100%
+  ) !important;
+}
+
+/* ── Hero: softer left gradient overlay ──────────────── */
+.hero-media::before {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,.97) 0%,
+    rgba(255,255,255,.84) 28%,
+    rgba(255,255,255,.42) 52%,
+    rgba(255,255,255,.06) 72%,
+    rgba(255,255,255,0) 100%
+  ) !important;
+}
+
+/* ── Why Book icon badge: more refined ───────────────── */
+.why-card > span {
+  background: linear-gradient(145deg, #daf2ff, #eef8ff) !important;
+  box-shadow:
+    inset 0 0 0 1.5px rgba(0,91,187,.12),
+    0 6px 18px rgba(0,91,187,.12) !important;
+}
+
+/* ── Trust icon badge: more refined ─────────────────── */
+.trust-icon {
+  background: linear-gradient(145deg, #d8efff, #eef8ff) !important;
+  box-shadow:
+    inset 0 0 0 1.5px rgba(0,91,187,.12),
+    0 4px 12px rgba(0,91,187,.1) !important;
+}
+
+/* ── Save button on cards ────────────────────────────── */
+.save-deal-button.is-icon {
+  background: rgba(6,23,47,.24) !important;
+  backdrop-filter: blur(12px) saturate(160%) !important;
+  border-color: rgba(255,255,255,.7) !important;
+  box-shadow: 0 4px 14px rgba(6,23,47,.2), inset 0 1px 0 rgba(255,255,255,.3) !important;
+}
+.save-deal-button.is-icon:hover,
+.save-deal-button.is-icon.is-saved {
+  background: rgba(0,82,204,.88) !important;
+  box-shadow: 0 8px 20px rgba(0,82,204,.3), inset 0 1px 0 rgba(255,255,255,.2) !important;
+}
+
+/* ── Promo banner CTA: stronger glow ────────────────── */
+.promo a {
+  box-shadow:
+    0 16px 36px rgba(253,186,30,.36),
+    inset 0 1px 0 rgba(255,255,255,.4) !important;
+}
+.promo a:hover {
+  box-shadow:
+    0 22px 48px rgba(253,186,30,.48),
+    inset 0 1px 0 rgba(255,255,255,.4) !important;
+}
+
+/* ── Search CTA: richer amber glow ──────────────────── */
+.search-cta {
+  box-shadow:
+    0 16px 36px rgba(253,186,30,.32),
+    inset 0 1px 0 rgba(255,255,255,.4) !important;
+}
+.search-cta:hover {
+  box-shadow:
+    0 22px 48px rgba(253,186,30,.44),
+    inset 0 1px 0 rgba(255,255,255,.4) !important;
+}
+
+/* ── Mobile hero: constrain hero on phones ───────────── */
+@media (max-width: 680px) {
+  .trust-badge { min-height: 42px; padding: 6px 12px; }
+  .footer-copyright-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+}
+
+/* ── View deal button: rounded + gradient ────────────── */
+.deal-foot a {
+  border-radius: 14px !important;
+  background: linear-gradient(135deg, #0048bb, #0068e0) !important;
+  box-shadow: 0 8px 20px rgba(0,72,187,.22), inset 0 1px 0 rgba(255,255,255,.18) !important;
+}
+.deal-foot a:hover {
+  box-shadow: 0 14px 32px rgba(0,72,187,.32), inset 0 1px 0 rgba(255,255,255,.18) !important;
+}
