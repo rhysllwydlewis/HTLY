@@ -44,7 +44,6 @@ export function HeroSearch({ destinationOptions }: HeroSearchProps) {
               type="button"
               role="tab"
               aria-selected={index === activeTab}
-              aria-pressed={index === activeTab}
               aria-controls="search-panel"
               onClick={() => setActiveTab(index)}
             >

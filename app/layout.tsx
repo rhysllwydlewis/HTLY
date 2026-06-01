@@ -1,15 +1,7 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
 import './polish.css';
 import { brandDisplay, brandOrigin, brandUrl } from '@/lib/brand';
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-  weight: ['400', '500', '600', '700', '800', '900'],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(brandOrigin()),
@@ -47,7 +39,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-GB" className={inter.variable}>
+    <html lang="en-GB">
       <body>{children}</body>
     </html>
   );
