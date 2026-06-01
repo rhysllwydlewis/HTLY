@@ -706,3 +706,583 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* =============================================================
+   HTLY Polish v6 — Golden standard: typography, glass, spacing,
+   button system, radius unification, OTA-grade polish
+   Inspiration: onthebeach.co.uk, reference render
+   =============================================================*/
+
+/* ── Design system tokens ────────────────────────────────── */
+:root {
+  /* Consolidated radius scale — was 13 different values */
+  --r-xs:   8px;
+  --r-sm:   12px;
+  --r-md:   16px;
+  --r-lg:   24px;
+  --r-xl:   32px;
+  --r-pill: 999px;
+
+  /* Typography scale */
+  --fw-display:  900;
+  --fw-heading:  850;
+  --fw-strong:   750;
+  --fw-ui:       950;   /* numbers, price, CTA labels only */
+  --fw-label:    800;   /* micro-labels, small caps */
+
+  /* Shadows */
+  --sh-xs:  0 2px 8px rgba(8,37,72,.06);
+  --sh-sm:  0 8px 24px rgba(8,37,72,.08);
+  --sh-md:  0 20px 48px rgba(8,37,72,.12);
+  --sh-lg:  0 32px 72px rgba(8,37,72,.18);
+  --sh-btn: 0 10px 24px rgba(0,80,196,.22);
+}
+
+/* ── TYPOGRAPHY — soften from aggressive 950/-.085em ────── */
+
+/* Hero H1 */
+.hero-copy h1 {
+  font-size: clamp(50px, 6.8vw, 86px) !important;
+  letter-spacing: -.062em !important;
+  line-height: .92 !important;
+  font-weight: 900 !important;
+  color: #051323 !important;
+}
+
+/* Section H2 — all instances */
+.section-head h2,
+.section h2,
+.why h2,
+.reviews h2,
+h2 {
+  font-weight: 900 !important;
+  letter-spacing: -.04em !important;
+}
+
+/* Deal card hotel name */
+.deal-body h3 {
+  font-size: 17.5px !important;
+  font-weight: 850 !important;
+  letter-spacing: -.03em !important;
+  min-height: 42px !important;
+  line-height: 1.18 !important;
+  color: #06172f !important;
+}
+
+/* Deal footer price */
+.deal-foot strong {
+  font-size: 26px !important;
+  font-weight: 950 !important;
+  letter-spacing: -.05em !important;
+  color: #06172f !important;
+}
+.deal-foot em {
+  color: #5a6e85 !important;
+  font-size: 12px !important;
+}
+.deal-foot small { font-size: 11px !important; color: #7a8fa5 !important; }
+
+/* Nav links — less heavy */
+.main-nav a { font-weight: 700 !important; font-size: 14px !important; }
+.main-nav a:hover::after { opacity: 1; }
+
+/* Body / paragraph text */
+.hero-copy p { font-weight: 550 !important; color: #1e3a57 !important; }
+
+/* ── BUTTON SYSTEM — unified ────────────────────────────── */
+
+/* Amber primary: search CTA, promo, article CTAs */
+.search-cta,
+.filter-submit,
+.primary-cta,
+.newsletter-input-row button,
+.article-cta-btn,
+.account-form button[type="submit"],
+.not-found-home {
+  border-radius: var(--r-pill) !important;
+  font-weight: 850 !important;
+  letter-spacing: -.01em !important;
+}
+
+/* Blue primary: book now, deal foot, view deal */
+.book-now,
+.deal-foot a,
+.not-found-deals {
+  border-radius: var(--r-pill) !important;
+  font-weight: 850 !important;
+}
+
+/* Secondary glass pill */
+.secondary-action,
+.filter-reset,
+.results-toolbar a,
+.placeholder-link,
+.not-found-search,
+.save-deal-button.is-wide {
+  border-radius: var(--r-pill) !important;
+  font-weight: 800 !important;
+}
+
+/* Sign-in pill */
+.sign-in { border-radius: var(--r-pill) !important; font-weight: 750 !important; }
+
+/* ── SEARCH CARD — premium glass OTA feel ─────────────── */
+
+/* Ensure CTA is never clipped */
+.search-cta {
+  min-width: 152px !important;
+  min-height: 66px !important;
+  font-size: 14.5px !important;
+  padding: 0 20px !important;
+  white-space: nowrap !important;
+}
+
+/* Search fields: clean glass */
+.search-field {
+  background: rgba(255,255,255,.96) !important;
+  border-color: rgba(200,218,240,.9) !important;
+  border-radius: var(--r-md) !important;
+  min-height: 66px !important;
+  transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease !important;
+}
+.search-field:hover:not(:focus-within) {
+  border-color: rgba(0,91,187,.3) !important;
+  background: #fff !important;
+}
+.search-field:focus-within {
+  border-color: rgba(0,80,196,.55) !important;
+  box-shadow: 0 0 0 3px rgba(0,80,196,.1), 0 4px 16px rgba(0,80,196,.08) !important;
+  background: #fff !important;
+}
+
+.field-label {
+  font-size: 11px !important;
+  font-weight: 850 !important;
+  letter-spacing: .04em !important;
+  text-transform: uppercase !important;
+  color: #7a90a8 !important;
+}
+.search-field input {
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  color: #06172f !important;
+}
+
+/* Search tab panel — cleaner */
+.search-tabs {
+  background: rgba(6,23,47,.05) !important;
+  margin: 12px 18px 0 !important;
+  border-radius: var(--r-pill) !important;
+  padding: 4px !important;
+  min-height: 48px !important;
+}
+.search-tab {
+  font-size: 13.5px !important;
+  font-weight: 800 !important;
+  min-width: 124px !important;
+  padding: 0 12px !important;
+  letter-spacing: -.01em !important;
+  border-radius: var(--r-pill) !important;
+  color: #3a526a !important;
+}
+.search-tab[aria-selected="true"],
+.search-tab[aria-pressed="true"] {
+  color: #0050c4 !important;
+  font-weight: 900 !important;
+}
+
+/* ── DEAL CARDS — refined ───────────────────────────────── */
+.deal-card {
+  border-radius: var(--r-lg) !important;
+  border-color: rgba(210,228,246,.6) !important;
+}
+.deal-card:hover { transform: translateY(-4px) !important; }
+
+/* Image — taller, better overlap */
+.deal-img { height: 228px !important; }
+
+/* Saving badge — cleaner pill */
+.deal-img > span {
+  border-radius: var(--r-pill) !important;
+  font-size: 10px !important;
+  font-weight: 950 !important;
+  letter-spacing: .08em !important;
+  padding: 5px 11px !important;
+  text-transform: uppercase !important;
+}
+
+/* Badge pill (type/board) */
+.deal-meta-row b {
+  border-radius: var(--r-xs) !important;
+  font-size: 10px !important;
+  font-weight: 950 !important;
+  letter-spacing: .04em !important;
+  text-transform: uppercase !important;
+}
+
+/* Amenity pills */
+.deal-body li {
+  border-radius: var(--r-pill) !important;
+  padding: 5px 10px !important;
+  font-size: 11.5px !important;
+  font-weight: 750 !important;
+  background: #f0f5fb !important;
+  color: #4a6278 !important;
+  gap: 5px !important;
+}
+
+/* View deal button — always pill, always visible */
+.deal-foot a {
+  border-radius: var(--r-pill) !important;
+  padding: 10px 18px !important;
+  font-size: 13px !important;
+  font-weight: 850 !important;
+  background: linear-gradient(135deg, #0050c4, #0070de) !important;
+  box-shadow: 0 8px 20px rgba(0,80,196,.22), inset 0 1px 0 rgba(255,255,255,.15) !important;
+  min-width: 88px !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+.deal-foot a:hover {
+  box-shadow: 0 14px 32px rgba(0,80,196,.32), inset 0 1px 0 rgba(255,255,255,.15) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Card padding */
+.deal-body { padding: 16px 18px 18px !important; gap: 10px !important; }
+
+/* ── DESTINATION CARDS — more refined ───────────────────── */
+.destination-card { border-radius: var(--r-lg) !important; }
+.destination-card strong { font-size: 19px !important; font-weight: 900 !important; }
+.destination-card small { font-size: 12px !important; font-weight: 750 !important; }
+
+/* ── TRUST STRIP ────────────────────────────────────────── */
+.trust-item {
+  border-radius: var(--r-lg) !important;
+  gap: 14px !important;
+  min-height: 82px !important;
+  padding: 18px 20px !important;
+}
+.trust-icon {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: var(--r-sm) !important;
+  flex-shrink: 0 !important;
+}
+.trust-item strong { font-size: 13.5px !important; font-weight: 850 !important; }
+.trust-item small { font-size: 12px !important; line-height: 1.35 !important; }
+
+/* ── WHY BOOK CARDS ─────────────────────────────────────── */
+.why-card {
+  border-radius: var(--r-lg) !important;
+  min-height: 180px !important;
+  padding: 24px !important;
+  gap: 14px !important;
+}
+.why-card > span {
+  width: 52px !important;
+  height: 52px !important;
+  border-radius: var(--r-sm) !important;
+}
+.why-card strong {
+  font-size: 16.5px !important;
+  font-weight: 850 !important;
+  letter-spacing: -.025em !important;
+  line-height: 1.2 !important;
+}
+.why-card small { font-size: 13.5px !important; line-height: 1.5 !important; }
+
+/* ── REVIEW CARDS ───────────────────────────────────────── */
+.score, .review {
+  border-radius: var(--r-lg) !important;
+  padding: 24px !important;
+}
+.score strong { font-size: 32px !important; font-weight: 900 !important; }
+.review strong { font-size: 14px !important; font-weight: 850 !important; letter-spacing: -.015em !important; }
+.review p { font-size: 13px !important; line-height: 1.58 !important; }
+.review small { font-size: 12px !important; font-weight: 750 !important; }
+
+/* ── PROMO BANNER ───────────────────────────────────────── */
+.promo {
+  border-radius: var(--r-xl) !important;
+  min-height: 290px !important;
+  padding: 44px 48px !important;
+}
+.promo h2 {
+  font-size: clamp(36px, 4.5vw, 54px) !important;
+  letter-spacing: -.055em !important;
+  font-weight: 900 !important;
+}
+.promo p { font-size: 16px !important; font-weight: 550 !important; }
+.promo-save {
+  min-width: 148px !important;
+  min-height: 148px !important;
+}
+.promo-save strong { font-size: 46px !important; letter-spacing: -.05em !important; }
+.promo a {
+  border-radius: var(--r-pill) !important;
+  font-weight: 850 !important;
+  padding: 14px 26px !important;
+  font-size: 14px !important;
+}
+@media (max-width: 680px) {
+  .promo { padding: 26px !important; min-height: auto !important; }
+}
+
+/* ── SECTION SPACING ────────────────────────────────────── */
+.section { padding: 52px 0 0 !important; }
+.deals-section, .destinations-section { padding-top: 56px !important; }
+.section-head { margin-bottom: 22px !important; }
+
+/* ── SEARCH PAGE FILTER RAIL & TOOLBAR ──────────────────── */
+.filter-rail {
+  border-radius: var(--r-lg) !important;
+  padding: 20px !important;
+}
+.results-toolbar {
+  border-radius: var(--r-lg) !important;
+  padding: 16px 20px !important;
+}
+.results-toolbar strong { font-size: 15.5px !important; font-weight: 850 !important; }
+.results-toolbar small { font-size: 12.5px !important; }
+.filter-note {
+  border-radius: var(--r-md) !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}
+
+/* ── HEADER ─────────────────────────────────────────────── */
+.header-inner { min-height: 80px !important; gap: 22px !important; }
+.sign-in {
+  border: 1.5px solid rgba(8,37,72,.14) !important;
+  font-size: 13.5px !important;
+  font-weight: 750 !important;
+  min-height: 44px !important;
+}
+.book-now {
+  font-size: 13.5px !important;
+  font-weight: 850 !important;
+  min-height: 44px !important;
+  box-shadow: 0 10px 22px rgba(0,83,187,.26) !important;
+}
+.book-now:hover {
+  box-shadow: 0 16px 32px rgba(0,83,187,.34) !important;
+}
+
+/* ── HERO ────────────────────────────────────────────────── */
+.hero { min-height: 620px !important; }
+
+.hero-copy > span {
+  font-size: 11.5px !important;
+  font-weight: 850 !important;
+  letter-spacing: .12em !important;
+  color: #0650a0 !important;
+  border: 1px solid rgba(0,80,160,.12) !important;
+}
+
+.hero-copy p {
+  font-size: 19px !important;
+  line-height: 1.48 !important;
+}
+
+.hero-actions a {
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  padding: 9px 16px !important;
+  border-radius: var(--r-pill) !important;
+  gap: 7px !important;
+}
+
+/* ── SEARCH CARD LAYOUT ─────────────────────────────────── */
+.search-card {
+  border-radius: var(--r-xl) !important;
+}
+.search-card-head {
+  padding: 20px 24px 10px !important;
+}
+.search-card-head strong {
+  font-size: 20px !important;
+  font-weight: 900 !important;
+  letter-spacing: -.03em !important;
+}
+.deal-alert {
+  border-radius: var(--r-pill) !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+}
+
+/* Search grid breakpoint — prevent any overflow */
+@media (max-width: 1100px) {
+  .holiday-search-form.is-hero {
+    grid-template-columns: minmax(200px, 1fr) minmax(200px, 1fr) !important;
+  }
+  .holiday-search-form.is-hero .destination-combobox,
+  .holiday-search-form.is-hero .search-cta {
+    grid-column: 1 / -1 !important;
+  }
+}
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+.footer { margin-top: 64px !important; }
+.footer h3 { font-weight: 850 !important; font-size: 13px !important; letter-spacing: .02em !important; color: #06172f !important; }
+.footer > .container > div > a { /* footer nav links */
+  font-size: 13px !important;
+  font-weight: 700 !important;
+}
+.newsletter {
+  border-radius: var(--r-lg) !important;
+  padding: 20px !important;
+}
+.newsletter h3 { margin-bottom: 6px !important; }
+.newsletter input {
+  border-radius: var(--r-pill) !important;
+  height: 44px !important;
+  font-size: 13.5px !important;
+  padding: 0 16px !important;
+}
+.newsletter button {
+  border-radius: var(--r-pill) !important;
+  height: 44px !important;
+  font-size: 13.5px !important;
+  font-weight: 850 !important;
+  gap: 7px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Trust badges */
+.trust-badge { border-radius: var(--r-md) !important; }
+
+/* ── GLASS POLISH — more visible on all surfaces ─────────── */
+
+/* Inner hero lite headings */
+.search-results-head h1 {
+  font-size: clamp(40px, 5.5vw, 68px) !important;
+  letter-spacing: -.06em !important;
+  font-weight: 900 !important;
+  line-height: .94 !important;
+}
+.search-results-head p {
+  font-size: 17px !important;
+  font-weight: 500 !important;
+  line-height: 1.55 !important;
+}
+
+/* Glass cards: universal 3-layer glow */
+.glass-card {
+  box-shadow:
+    0 1px 0 0 rgba(255,255,255,.8) inset,
+    0 20px 52px rgba(8,37,72,.13),
+    0 4px 12px rgba(8,37,72,.06) !important;
+}
+
+/* Region/filter pills */
+.region-pill {
+  border-radius: var(--r-pill) !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+}
+.region-pill.is-active {
+  font-weight: 850 !important;
+}
+
+/* Filter chips */
+.filter-chips span {
+  border-radius: var(--r-pill) !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+}
+
+/* Micro label standardization */
+.micro-label {
+  font-size: 11px !important;
+  font-weight: 950 !important;
+  letter-spacing: .14em !important;
+}
+
+/* Article cat pill */
+.article-cat {
+  border-radius: var(--r-pill) !important;
+  font-size: 10px !important;
+  font-weight: 950 !important;
+  letter-spacing: .06em !important;
+}
+
+/* Destination quick links */
+.dest-quick-link {
+  border-radius: var(--r-md) !important;
+  padding: 14px 16px !important;
+}
+.dest-quick-link strong { font-weight: 850 !important; }
+.dest-quick-link small { font-size: 11.5px !important; }
+
+/* Hotel trust items */
+.hotel-trust-item {
+  border-radius: var(--r-pill) !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+}
+
+/* ── MOBILE ──────────────────────────────────────────────── */
+@media (max-width: 680px) {
+  .hero { min-height: 780px !important; }
+  .hero-copy h1 { font-size: 48px !important; }
+  .hero-copy p { font-size: 16.5px !important; }
+  .deal-img { height: 210px !important; }
+  .trust-item { min-height: auto !important; padding: 14px 16px !important; }
+  .why-card { min-height: auto !important; padding: 20px !important; }
+  .promo-save { min-width: 120px !important; min-height: 120px !important; }
+  .promo-save strong { font-size: 40px !important; }
+}
+
+/* ── DEAL DETAIL PAGES ──────────────────────────────────── */
+.deal-hero-copy h1 {
+  font-size: clamp(44px, 7vw, 88px) !important;
+  letter-spacing: -.068em !important;
+  font-weight: 900 !important;
+}
+.price-panel strong {
+  font-size: 48px !important;
+  letter-spacing: -.058em !important;
+  font-weight: 950 !important;
+}
+.fact-card { border-radius: var(--r-lg) !important; }
+.trust-panel { border-radius: var(--r-xl) !important; }
+
+/* ── NEWSLETTER BANNER ──────────────────────────────────── */
+.newsletter-banner { border-radius: var(--r-xl) !important; }
+.newsletter-banner-copy h2 { font-weight: 900 !important; letter-spacing: -.05em !important; }
+.newsletter-input-row { border-radius: var(--r-md) !important; }
+.newsletter-input-row button { font-weight: 850 !important; }
+
+/* ── 404 PAGE ───────────────────────────────────────────── */
+.not-found-copy h1 { font-weight: 900 !important; letter-spacing: -.055em !important; }
+.not-found-home, .not-found-deals, .not-found-search { border-radius: var(--r-pill) !important; }
+.not-found-deal-row { border-radius: var(--r-md) !important; }
+
+/* ── HELP + FAQ ─────────────────────────────────────────── */
+.help-contact-card { border-radius: var(--r-lg) !important; }
+.help-contact-icon { border-radius: var(--r-sm) !important; }
+.faq-card { border-radius: var(--r-lg) !important; padding: 22px 24px !important; }
+.faq-card strong { font-weight: 850 !important; }
+
+/* ── LEGAL PAGES ────────────────────────────────────────── */
+.legal-body { border-radius: var(--r-xl) !important; }
+.legal-section h2 { font-weight: 850 !important; }
+.legal-header h1 { font-weight: 900 !important; letter-spacing: -.06em !important; }
+
+/* ── ACCOUNT PAGE ───────────────────────────────────────── */
+.account-card { border-radius: var(--r-xl) !important; }
+.account-form input:not([type="checkbox"]) { border-radius: var(--r-md) !important; }
+.account-form button[type="submit"] { min-height: 50px !important; font-size: 15px !important; }
+
+/* ── ARTICLE PAGES ──────────────────────────────────────── */
+.article-body { border-radius: var(--r-xl) !important; }
+.article-sidebar-card { border-radius: var(--r-lg) !important; }
+.article-cta-btn { border-radius: var(--r-pill) !important; font-weight: 850 !important; }
+
+/* ── REDUCED MOTION ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
