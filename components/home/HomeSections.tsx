@@ -3,32 +3,27 @@ import Link from 'next/link';
 import { HolidayDealCard } from '@/components/HolidayDealCard';
 import { Icon } from '@/components/Icon';
 import { SectionHead } from '@/components/SectionHead';
-import {
-  benefits, deals, destinations, inspirationArticles,
-  promoImage, reviews,
-} from '@/lib/holiday-data';
+import { benefits, deals, destinations, inspirationArticles, promoImage, reviews } from '@/lib/holiday-data';
 
 /* ── Trust strip ──────────────────────────────────────────── */
 export function TrustStrip() {
   const items = [
-    { icon: 'atol'    as const, title: 'ATOL Protected',    copy: 'Travel with confidence'      },
-    { icon: 'clock'   as const, title: 'Free Cancellation', copy: 'On selected stays'           },
-    { icon: 'lock'    as const, title: 'Secure Booking',    copy: 'Encrypted & safe'            },
-    { icon: 'uk'      as const, title: 'UK Support',        copy: 'Here to help 7 days a week'  },
+    { icon: 'atol'    as const, title: 'ATOL Protected',    copy: 'Financial protection on every flight package' },
+    { icon: 'clock'   as const, title: 'Free Cancellation', copy: 'On thousands of selected stays'               },
+    { icon: 'lock'    as const, title: 'Secure Booking',    copy: 'Your data & payments are always encrypted'    },
+    { icon: 'uk'      as const, title: 'UK Support',        copy: '7 days a week, 8am–8pm'                      },
   ];
   return (
-    <section className="trust" aria-label="Booking reassurances">
-      <div className="container trust-grid">
-        {items.map((item) => (
-          <article className="trust-item" key={item.title}>
-            <span className="trust-icon" aria-hidden="true">
-              <Icon name={item.icon} />
-            </span>
-            <span>
-              <strong>{item.title}</strong>
-              <small>{item.copy}</small>
-            </span>
-          </article>
+    <section className="trust-strip" aria-label="Why book with HTLY">
+      <div className="container trust-strip-grid">
+        {items.map(({ icon, title, copy }) => (
+          <div className="trust-strip-item" key={title}>
+            <span className="trust-strip-icon"><Icon name={icon} aria-hidden="true" /></span>
+            <div>
+              <strong>{title}</strong>
+              <span>{copy}</span>
+            </div>
+          </div>
         ))}
       </div>
     </section>
@@ -38,12 +33,17 @@ export function TrustStrip() {
 /* ── Featured deals ───────────────────────────────────────── */
 export function FeaturedDeals() {
   return (
-    <section className="section deals-section">
-      <div className="container deals-wrap">
-        <SectionHead title="Featured holiday deals" kicker="Fresh offers" link="View all deals" href="/deals" />
-        <div className="deal-row featured-deal-row">
+    <section className="section" aria-labelledby="featured-deals-heading">
+      <div className="container">
+        <SectionHead
+          title="Featured holiday deals"
+          kicker="Fresh offers"
+          link="View all deals"
+          href="/deals"
+        />
+        <div className="deal-grid deal-grid--featured">
           {deals.slice(0, 5).map((deal) => (
-            <HolidayDealCard deal={deal} key={deal.slug} />
+            <HolidayDealCard key={deal.slug} deal={deal} />
           ))}
         </div>
       </div>
@@ -54,26 +54,33 @@ export function FeaturedDeals() {
 /* ── Popular destinations ─────────────────────────────────── */
 export function PopularDestinations() {
   return (
-    <section className="section destinations-section">
+    <section className="section" aria-labelledby="destinations-heading">
       <div className="container">
-        <SectionHead title="Popular destinations" kicker="Where next?" link="Explore all destinations" href="/destinations" />
-        <div className="destination-grid">
-          {destinations.map((destination) => (
+        <SectionHead
+          title="Popular destinations"
+          kicker="Where next?"
+          link="Explore all"
+          href="/destinations"
+        />
+        <div className="dest-mosaic">
+          {destinations.map((dest, i) => (
             <a
-              className="destination-card"
-              href={`/search?destination=${encodeURIComponent(destination.name)}`}
-              key={destination.name}
+              key={dest.name}
+              href={`/search?destination=${encodeURIComponent(dest.name)}`}
+              className={`dest-tile${i < 2 ? ' dest-tile--featured' : ''}`}
+              aria-label={`Holidays in ${dest.name} — ${dest.price}`}
             >
               <Image
-                src={destination.image}
-                alt={`${destination.name} holiday destination`}
+                src={dest.image}
+                alt={`${dest.name} holiday`}
                 fill
-                sizes="(max-width: 680px) 100vw, (max-width: 1180px) 33vw, 390px"
+                sizes="(max-width: 680px) 100vw, (max-width: 1200px) 50vw, 400px"
+                style={{ objectFit: 'cover' }}
               />
-              <span>
-                <strong>{destination.name}</strong>
-                <small>{destination.price}</small>
-              </span>
+              <div className="dest-tile-body">
+                <span className="dest-tile-name">{dest.name}</span>
+                <span className="dest-tile-price">{dest.price}</span>
+              </div>
             </a>
           ))}
         </div>
@@ -85,25 +92,23 @@ export function PopularDestinations() {
 /* ── Why book ─────────────────────────────────────────────── */
 export function WhyBook() {
   return (
-    <section className="section why">
+    <section className="section why-section" aria-labelledby="why-book-heading">
       <div className="container">
         <div className="section-head compact">
           <div>
             <span className="micro-label">Designed around you</span>
-            <h2>Why book with HTLY?</h2>
+            <h2 id="why-book-heading">Why book with HTLY?</h2>
           </div>
         </div>
         <div className="why-grid">
-          {benefits.map((benefit) => (
-            <article className="why-card" key={benefit.title}>
-              <span aria-hidden="true">
-                <Icon name={benefit.icon} />
-              </span>
+          {benefits.map(({ icon, title, copy }) => (
+            <div className="why-card" key={title}>
+              <div className="why-icon"><Icon name={icon} aria-hidden="true" /></div>
               <div>
-                <strong>{benefit.title}</strong>
-                <small>{benefit.copy}</small>
+                <strong>{title}</strong>
+                <p>{copy}</p>
               </div>
-            </article>
+            </div>
           ))}
         </div>
       </div>
@@ -114,48 +119,65 @@ export function WhyBook() {
 /* ── Promo banner ─────────────────────────────────────────── */
 export function PromoBanner() {
   return (
-    <section className="container promo" aria-label="Limited-time holiday offers">
-      <Image src={promoImage} alt="Beachfront all-inclusive holiday view" fill sizes="1180px" />
-      <div className="promo-content">
-        <span>Limited time offers</span>
-        <h2>All-inclusive<br />escapes</h2>
-        <p>Luxury stays. Everything included.<br />Sun, sea and total relaxation.</p>
+    <section className="promo-section" aria-label="Limited-time offer">
+      <div className="container">
+        <div className="promo-card">
+          <Image
+            src={promoImage}
+            alt="Luxury beachfront resort"
+            fill
+            quality={90}
+            sizes="1200px"
+            style={{ objectFit: 'cover', objectPosition: 'center 30%' }}
+          />
+          <div className="promo-overlay" aria-hidden="true" />
+          <div className="promo-body">
+            <span className="promo-eyebrow">Limited time offers</span>
+            <h2 className="promo-title">All-inclusive<br />escapes</h2>
+            <p className="promo-sub">Luxury stays. Everything included. Sun, sea and total relaxation.</p>
+            <a href="/deals" className="promo-cta">
+              Explore offers
+              <Icon name="arrowRight" aria-hidden="true" />
+            </a>
+          </div>
+          <div className="promo-save-badge">
+            <span>Save up to</span>
+            <strong>30%</strong>
+            <span>on selected holidays</span>
+          </div>
+        </div>
       </div>
-      <div className="promo-save glass-card">
-        <small>Save up to</small>
-        <strong>30%</strong>
-        <small>on selected holidays</small>
-      </div>
-      <a href="/deals">
-        Explore offers
-        <Icon name="arrowRight" aria-hidden="true" />
-      </a>
     </section>
   );
 }
 
 /* ── Inspiration teaser ───────────────────────────────────── */
 export function InspirationTeaser() {
-  const articles = inspirationArticles.slice(0, 3);
   return (
-    <section className="section">
+    <section className="section" aria-labelledby="inspiration-heading">
       <div className="container">
-        <SectionHead title="Travel inspiration" kicker="Plan smarter" link="All guides" href="/inspiration" />
-        <div className="inspiration-teaser-grid">
-          {articles.map((article) => (
-            <Link key={article.slug} href={`/inspiration/${article.slug}`} className="inspiration-teaser-card">
-              <div className="inspiration-teaser-img">
+        <SectionHead
+          title="Travel inspiration"
+          kicker="Plan smarter"
+          link="All guides"
+          href="/inspiration"
+        />
+        <div className="inspo-grid">
+          {inspirationArticles.slice(0, 3).map((article) => (
+            <Link key={article.slug} href={`/inspiration/${article.slug}`} className="inspo-card">
+              <div className="inspo-img">
                 <Image
                   src={article.image}
                   alt={article.title}
                   fill
-                  sizes="(max-width: 680px) 100vw, (max-width: 1180px) 50vw, 380px"
+                  sizes="(max-width: 680px) 100vw, 380px"
+                  style={{ objectFit: 'cover' }}
                 />
               </div>
-              <div className="inspiration-teaser-body">
-                <span className="article-cat">{article.category}</span>
-                <strong>{article.title}</strong>
-                <span className="article-meta">
+              <div className="inspo-body">
+                <span className="inspo-cat">{article.category}</span>
+                <strong className="inspo-title">{article.title}</strong>
+                <span className="inspo-read">
                   <Icon name="clock" aria-hidden="true" />
                   {article.readTime}
                 </span>
@@ -169,47 +191,54 @@ export function InspirationTeaser() {
 }
 
 /* ── Reviews ──────────────────────────────────────────────── */
-function GreenStars({ count = 5 }: { count?: number }) {
+function GreenStar() {
   return (
-    <div className="review-stars-green" aria-label={`${count} out of 5 stars`}>
-      {Array.from({ length: count }, (_, i) => (
-        <Icon key={i} name="star" className="is-filled" aria-hidden="true" />
-      ))}
-    </div>
+    <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"
+      fill="#00b67a" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2.5l3 6.1 6.7 1-4.9 4.8 1.2 6.7-6-3.2-6 3.2 1.2-6.7-4.9-4.8 6.7-1 3-6.1Z" />
+    </svg>
   );
 }
 
 export function Reviews() {
   return (
-    <section className="section reviews" aria-label="Customer reviews">
+    <section className="section reviews-section" aria-labelledby="reviews-heading">
       <div className="container">
         <div className="section-head compact">
           <div>
             <span className="micro-label">Traveller feedback</span>
-            <h2>Loved by travellers</h2>
+            <h2 id="reviews-heading">Loved by travellers</h2>
           </div>
         </div>
-        <div className="review-grid">
-          <div className="score glass-card">
-            <strong>Excellent</strong>
-            <div className="score-rating-row">
-              <GreenStars />
+        <div className="reviews-grid">
+
+          {/* Trustpilot score */}
+          <div className="review-score">
+            <strong className="review-score-label">Excellent</strong>
+            <div className="review-score-stars" aria-label="4.7 out of 5 stars">
+              {Array.from({ length: 5 }, (_, i) => <GreenStar key={i} />)}
             </div>
-            <div className="tp-badge">
-              4.7 out of 5 &middot; Trustpilot
-            </div>
-            <small style={{ marginTop: 10, display: 'block', lineHeight: 1.45 }}>
-              Ratings shown as illustrative placeholder content only
-            </small>
+            <span className="review-score-rating">
+              <strong>4.7</strong> out of 5
+            </span>
+            <span className="review-tp-label">
+              <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="#00b67a"><path d="M12 2.5l3 6.1 6.7 1-4.9 4.8 1.2 6.7-6-3.2-6 3.2 1.2-6.7-4.9-4.8 6.7-1 3-6.1Z" /></svg>
+              Trustpilot
+            </span>
           </div>
-          {reviews.map((review) => (
-            <article className="review glass-card" key={review.person}>
-              <GreenStars />
-              <strong>&ldquo;{review.title}&rdquo;</strong>
-              <p>{review.quote}</p>
-              <small>— {review.person}{review.location ? `, ${review.location}` : ''}</small>
-            </article>
+
+          {/* Review cards */}
+          {reviews.map((r) => (
+            <div className="review-card" key={r.person}>
+              <div className="review-stars" aria-label="5 stars">
+                {Array.from({ length: 5 }, (_, i) => <GreenStar key={i} />)}
+              </div>
+              <strong className="review-title">&ldquo;{r.title}&rdquo;</strong>
+              <p className="review-quote">{r.quote}</p>
+              <span className="review-author">— {r.person}{r.location ? `, ${r.location}` : ''}</span>
+            </div>
           ))}
+
         </div>
       </div>
     </section>
@@ -219,35 +248,38 @@ export function Reviews() {
 /* ── Newsletter banner ────────────────────────────────────── */
 export function NewsletterBanner() {
   return (
-    <section className="container newsletter-banner" aria-label="Newsletter signup">
-      <div className="newsletter-banner-copy">
-        <span className="micro-label" style={{ color: 'var(--yellow-2)' }}>Deal alerts</span>
-        <h2>Get deals before everyone else</h2>
-        <p>
-          Join thousands of travellers who get exclusive offers, early-access deals
-          and travel inspiration straight to their inbox.
-        </p>
-        <div className="newsletter-trust">
-          <Icon name="lock" aria-hidden="true" />
-          <small>No spam. Unsubscribe anytime. We never share your email.</small>
+    <section className="nl-banner" aria-label="Sign up for deal alerts">
+      <div className="container">
+        <div className="nl-inner">
+          <div className="nl-copy">
+            <span className="nl-eyebrow">Deal alerts</span>
+            <h2 className="nl-title">Get deals before everyone else</h2>
+            <p className="nl-sub">
+              Join thousands of travellers who get exclusive offers and travel inspiration straight to their inbox.
+            </p>
+          </div>
+          <form className="nl-form" action="/search" noValidate aria-label="Subscribe">
+            <div className="nl-fields">
+              <label htmlFor="nl-email" className="sr-only">Email address</label>
+              <input
+                id="nl-email"
+                type="email"
+                name="email"
+                placeholder="Your email address"
+                autoComplete="email"
+              />
+              <button type="submit">
+                <Icon name="mail" aria-hidden="true" />
+                Subscribe
+              </button>
+            </div>
+            <p className="nl-privacy">
+              <Icon name="lock" aria-hidden="true" />
+              No spam. Unsubscribe anytime. We never share your email.
+            </p>
+          </form>
         </div>
       </div>
-      <form className="newsletter-banner-form" action="/search" noValidate aria-label="Subscribe to deal alerts">
-        <div className="newsletter-input-row">
-          <label className="sr-only" htmlFor="newsletter-email">Email address</label>
-          <input
-            id="newsletter-email"
-            type="email"
-            name="email"
-            placeholder="Your email address"
-            autoComplete="email"
-          />
-          <button type="submit">
-            <Icon name="mail" aria-hidden="true" />
-            Subscribe
-          </button>
-        </div>
-      </form>
     </section>
   );
 }
