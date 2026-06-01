@@ -1,8 +1,12 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { HolidayDealCard } from '@/components/HolidayDealCard';
 import { Icon } from '@/components/Icon';
 import { SectionHead } from '@/components/SectionHead';
-import { benefits, deals, destinations, promoImage, reviews } from '@/lib/holiday-data';
+import {
+  benefits, deals, destinations, inspirationArticles,
+  promoImage, reviews,
+} from '@/lib/holiday-data';
 
 /* ── Trust strip ──────────────────────────────────────────── */
 export function TrustStrip() {
@@ -130,6 +134,40 @@ export function PromoBanner() {
   );
 }
 
+/* ── Inspiration teaser ───────────────────────────────────── */
+export function InspirationTeaser() {
+  const articles = inspirationArticles.slice(0, 3);
+  return (
+    <section className="section">
+      <div className="container">
+        <SectionHead title="Travel inspiration" kicker="Plan smarter" link="All guides" href="/inspiration" />
+        <div className="inspiration-teaser-grid">
+          {articles.map((article) => (
+            <Link key={article.slug} href={`/inspiration/${article.slug}`} className="inspiration-teaser-card">
+              <div className="inspiration-teaser-img">
+                <Image
+                  src={article.image}
+                  alt={article.title}
+                  fill
+                  sizes="(max-width: 680px) 100vw, (max-width: 1180px) 50vw, 380px"
+                />
+              </div>
+              <div className="inspiration-teaser-body">
+                <span className="article-cat">{article.category}</span>
+                <strong>{article.title}</strong>
+                <span className="article-meta">
+                  <Icon name="clock" aria-hidden="true" />
+                  {article.readTime}
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ── Reviews ──────────────────────────────────────────────── */
 function GreenStars({ count = 5 }: { count?: number }) {
   return (
@@ -152,7 +190,6 @@ export function Reviews() {
           </div>
         </div>
         <div className="review-grid">
-          {/* Aggregate score */}
           <div className="score glass-card">
             <strong>Excellent</strong>
             <div className="score-rating-row">
@@ -161,11 +198,10 @@ export function Reviews() {
             <div className="tp-badge">
               4.7 out of 5 &middot; Trustpilot
             </div>
-            <small style={{ marginTop: '10px', display: 'block', lineHeight: '1.45' }}>
+            <small style={{ marginTop: 10, display: 'block', lineHeight: 1.45 }}>
               Ratings shown as illustrative placeholder content only
             </small>
           </div>
-          {/* Individual reviews */}
           {reviews.map((review) => (
             <article className="review glass-card" key={review.person}>
               <GreenStars />
@@ -176,6 +212,42 @@ export function Reviews() {
           ))}
         </div>
       </div>
+    </section>
+  );
+}
+
+/* ── Newsletter banner ────────────────────────────────────── */
+export function NewsletterBanner() {
+  return (
+    <section className="container newsletter-banner" aria-label="Newsletter signup">
+      <div className="newsletter-banner-copy">
+        <span className="micro-label" style={{ color: 'var(--yellow-2)' }}>Deal alerts</span>
+        <h2>Get deals before everyone else</h2>
+        <p>
+          Join thousands of travellers who get exclusive offers, early-access deals
+          and travel inspiration straight to their inbox.
+        </p>
+        <div className="newsletter-trust">
+          <Icon name="lock" aria-hidden="true" />
+          <small>No spam. Unsubscribe anytime. We never share your email.</small>
+        </div>
+      </div>
+      <form className="newsletter-banner-form" action="/search" noValidate aria-label="Subscribe to deal alerts">
+        <div className="newsletter-input-row">
+          <label className="sr-only" htmlFor="newsletter-email">Email address</label>
+          <input
+            id="newsletter-email"
+            type="email"
+            name="email"
+            placeholder="Your email address"
+            autoComplete="email"
+          />
+          <button type="submit">
+            <Icon name="mail" aria-hidden="true" />
+            Subscribe
+          </button>
+        </div>
+      </form>
     </section>
   );
 }
