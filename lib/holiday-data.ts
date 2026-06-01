@@ -71,9 +71,9 @@ export type InspirationArticle = {
 };
 
 export const heroImage =
-  'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=2400&q=88';
+  'https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=2400&q=92';
 export const promoImage =
-  'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=86';
+  'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1800&q=90';
 
 export const navigation: NavigationItem[] = [
   { label: 'Holidays',     href: '/holidays'     },

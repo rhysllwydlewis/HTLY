@@ -4,18 +4,19 @@ import { Icon } from '@/components/Icon';
 import { SaveDealButton } from '@/components/SaveDealButton';
 import { getDealHref, type HolidayDeal } from '@/lib/holiday-data';
 
-function StarRating({ rating }: { rating: number }) {
-  const full  = Math.round(rating);
+function Stars({ rating }: { rating: number }) {
+  const filled = Math.round(rating);
   return (
-    <div className="stars" aria-label={`${rating.toFixed(1)} out of 5 rating`}>
+    <div className="dc-stars" aria-label={`${rating.toFixed(1)} out of 5`}>
       {Array.from({ length: 5 }, (_, i) => (
-        <Icon
-          key={i}
-          name="star"
-          className={i < full ? 'is-filled' : ''}
-        />
+        <svg key={i} width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"
+          fill={i < filled ? '#F5A623' : 'none'}
+          stroke={i < filled ? '#F5A623' : '#CBD5E0'}
+          strokeWidth="1.75" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2.5l3 6.1 6.7 1-4.9 4.8 1.2 6.7-6-3.2-6 3.2 1.2-6.7-4.9-4.8 6.7-1 3-6.1Z" />
+        </svg>
       ))}
-      <small>{rating.toFixed(1)}</small>
+      <span>{rating.toFixed(1)}</span>
     </div>
   );
 }
@@ -23,49 +24,55 @@ function StarRating({ rating }: { rating: number }) {
 export function HolidayDealCard({
   deal,
   href = getDealHref(deal),
-  cta  = 'View deal',
+  cta = 'View deal',
 }: {
   deal: HolidayDeal;
   href?: string;
   cta?: string;
 }) {
   return (
-    <article className="deal-card">
+    <article className="dc">
 
-      {/* Image + badges */}
-      <Link
-        className="deal-img"
-        href={href}
-        aria-label={`View ${deal.resort} holiday deal`}
-      >
+      {/* ── Image ── */}
+      <Link className="dc-img" href={href} tabIndex={-1} aria-hidden="true">
         <Image
           src={deal.image}
           alt={`${deal.resort} in ${deal.destination}`}
           fill
-          sizes="(max-width: 680px) 82vw, (max-width: 1180px) 33vw, 300px"
+          sizes="(max-width: 680px) 90vw, (max-width: 1200px) 44vw, 320px"
+          style={{ objectFit: 'cover' }}
         />
         {/* Saving badge */}
-        <span>{deal.saving}</span>
+        <div className="dc-saving">{deal.saving}</div>
+        {/* Dark gradient at bottom for legibility */}
+        <div className="dc-img-overlay" aria-hidden="true" />
       </Link>
 
-      {/* Save / heart button */}
+      {/* Save button */}
       <SaveDealButton slug={deal.slug} resort={deal.resort} />
 
-      {/* Card body */}
-      <div className="deal-body">
-        <div className="deal-meta-row">
-          <small>{deal.destination}</small>
-          <b>{deal.badge}</b>
+      {/* ── Content ── */}
+      <div className="dc-body">
+
+        {/* Location + badge row */}
+        <div className="dc-top">
+          <span className="dc-location">
+            <Icon name="pin" aria-hidden="true" />
+            {deal.destination}
+          </span>
+          <span className="dc-badge">{deal.badge}</span>
         </div>
 
-        <h3>
+        {/* Hotel name */}
+        <h3 className="dc-name">
           <Link href={href}>{deal.resort}</Link>
         </h3>
 
-        <StarRating rating={deal.rating} />
+        {/* Stars */}
+        <Stars rating={deal.rating} />
 
         {/* Amenities */}
-        <ul aria-label="Deal highlights">
+        <ul className="dc-amenities" aria-label="Included">
           <li>
             <Icon name="clock" aria-hidden="true" />
             {deal.nights}
@@ -81,17 +88,15 @@ export function HolidayDealCard({
         </ul>
 
         {/* Price + CTA */}
-        <div className="deal-foot">
-          <p>
-            <small>From</small>
-            <strong>
-              {deal.price}
-              <em> pp</em>
-            </strong>
-            <span>{deal.total}</span>
-          </p>
-          <Link href={href}>{cta}</Link>
+        <div className="dc-foot">
+          <div className="dc-price">
+            <span className="dc-price-from">From</span>
+            <strong className="dc-price-amount">{deal.price}</strong>
+            <span className="dc-price-pp">pp</span>
+          </div>
+          <Link href={href} className="dc-cta">{cta}</Link>
         </div>
+
       </div>
     </article>
   );
